@@ -1,0 +1,31 @@
+pages-list:
+  handler: src/modules/pages/pages-functions.list
+  events:
+    - http:
+        method: get
+        path: pages
+        cors: true
+
+pages-get:
+  handler: src/modules/pages/pages-functions.get
+  events:
+    - http:
+        method: get
+        path: pages/{id}
+        cors: true
+
+pages-create:
+  handler: src/modules/pages/pages-functions.create
+  events:
+    - http:
+        method: post
+        path: pages
+        cors: true
+
+pages-update:
+  handler: src/modules/pages/pages-functions.update
+  events:
+    - http:
+        method: put
+        path: pages/{id}
+        cors: true
