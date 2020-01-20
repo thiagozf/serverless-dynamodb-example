@@ -1,8 +1,6 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { DynamoConfig } from "./dynamodb-config";
-
-const isOffline = process.env.IS_OFFLINE;
-const isTest = process.env.JEST_WORKER_ID;
+import { isTest, isOffline } from "~/utils/environment";
 
 const config = {
   convertEmptyValues: true,
@@ -11,7 +9,7 @@ const config = {
     sslEnabled: false,
     region: "local-env"
   }),
-  ...(isOffline && {
+  ...(isOffline && /* istanbul ignore next */ {
     region: "localhost",
     endpoint: `http://localhost:8000`,
     accessKeyId: "MOCK_ACCESS_KEY_ID",

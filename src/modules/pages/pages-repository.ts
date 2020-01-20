@@ -11,14 +11,6 @@ const getSK = (tenant: string) => `${tenant}:Page`;
 
 const getGSI_SK = (name: string) => name;
 
-const asAttributes = (page: DeepPartial<Page>): any => {
-  const attributes = {};
-  Object.keys(page).forEach(key => {
-    attributes[key] = page[key] || null;
-  });
-  return attributes;
-};
-
 export const createPage = async (data: DeepPartial<Page>): Promise<Page> => {
   const params = {
     TableName: tableName,
@@ -26,7 +18,7 @@ export const createPage = async (data: DeepPartial<Page>): Promise<Page> => {
       PK: getPK(data.tenant, data.id),
       SK: getSK(data.tenant),
       GSI_SK: getGSI_SK(data.name),
-      ...asAttributes(data)
+      ...data
     }
   };
 
@@ -40,7 +32,6 @@ export const updatePage = async (
   id: string,
   data: DeepPartial<Page>
 ): Promise<Page> => {
-  const attributes = asAttributes(data);
   const params = {
     TableName: tableName,
     Key: {
@@ -56,11 +47,11 @@ export const updatePage = async (
       "GSI_SK = :GSI_SK",
     ExpressionAttributeValues: {
       ":GSI_SK": getGSI_SK(data.name),
-      ":name": attributes.name || null,
-      ":content": attributes.content || null,
-      ":status": attributes.status || null,
-      ":updatedBy": attributes.updatedBy || null,
-      ":updatedAt": attributes.updatedAt || null
+      ":name": data.name,
+      ":status": data.status,
+      ":updatedBy": data.updatedBy,
+      ":updatedAt": data.updatedAt,
+      ":content": data.content || null
     },
     ExpressionAttributeNames: {
       "#nm": "name",

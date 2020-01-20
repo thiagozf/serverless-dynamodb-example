@@ -1,1 +1,2 @@
-export const isDevelopment = process.env.NODE_ENV === "development";
+export const isOffline = !!process.env.IS_OFFLINE;
+export const isTest = !!process.env.JEST_WORKER_ID;

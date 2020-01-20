@@ -58,8 +58,7 @@ describe("Pages", () => {
 
     const updatedPage: PageEditable = {
       name: "Updated page",
-      status: "PUBLISHED",
-      content: "some random content"
+      status: "PUBLISHED"
     };
 
     const result = await update(
